@@ -11,46 +11,30 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdminController {
 
-    @Autowired
-    private StudentRepository studentRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private EnrollmentRepository enrollmentRepository;
+    @Autowired private StudentRepository studentRepository;
+    @Autowired private CourseRepository courseRepository;
+    @Autowired private EnrollmentRepository enrollmentRepository;
 
     @GetMapping("/stats")
     public Map<String, Long> getStats() {
-
         Map<String, Long> stats = new HashMap<>();
 
-        long students = studentRepository.count();
+        stats.put("students", studentRepository.count());
+        stats.put("courses", courseRepository.count());
+        stats.put("enrollments", enrollmentRepository.count());
 
-        // ⭐ FIXED: unique course names
-        long courses = courseRepository.findAll()
-                .stream()
-                .map(c -> c.getCourseName())
-                .distinct()
-                .count();
-
-        long enrollments = enrollmentRepository.count();
-
-        // ⭐ distinct faculty
+        // Count distinct faculty_name from course table
         long faculty = courseRepository.findAll()
                 .stream()
-                .map(c -> c.getFaculty())
+                .map(c -> c.getFacultyName())
+                .filter(f -> f != null && !f.isEmpty())
                 .distinct()
                 .count();
 
-        stats.put("students", students);
-        stats.put("courses", courses);
         stats.put("faculty", faculty);
-        stats.put("enrollments", enrollments);
-
         return stats;
     }
 }

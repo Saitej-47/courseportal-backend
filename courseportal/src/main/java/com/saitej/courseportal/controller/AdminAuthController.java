@@ -16,12 +16,27 @@ public class AdminAuthController {
     @PostMapping("/login")
     public Map<String, Object> adminLogin(@RequestBody Map<String, String> req) {
 
-        String email = req.get("email");
-        String password = req.get("password");
+        // ✅ Debug: check if API is hit
+        System.out.println("==== ADMIN LOGIN API HIT ====");
+
+        // ✅ Safe fetch + trim
+        String email = req.get("email") != null ? req.get("email").trim() : "";
+        String password = req.get("password") != null ? req.get("password").trim() : "";
+
+        System.out.println("Entered Email: [" + email + "]");
+        System.out.println("Entered Password: [" + password + "]");
 
         Map<String, Object> res = new HashMap<>();
 
-        if (ADMIN_EMAIL.equals(email) && ADMIN_PASSWORD.equals(password)) {
+        // ✅ Validation
+        if (email.isEmpty() || password.isEmpty()) {
+            res.put("success", false);
+            res.put("message", "Email or Password cannot be empty");
+            return res;
+        }
+
+        // ✅ Actual login check
+        if (ADMIN_EMAIL.equalsIgnoreCase(email) && ADMIN_PASSWORD.equals(password)) {
             res.put("success", true);
             res.put("message", "Admin login success");
         } else {

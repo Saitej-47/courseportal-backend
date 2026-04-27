@@ -37,4 +37,8 @@ public class EnrollmentController {
     public List<Map<String,Object>> getFacultyStudentCounts(){
         return service.getFacultyStudentCounts();
     }
+    @GetMapping("/all-details")
+    public List<Map<String,Object>> getAllEnrollments(){
+        return service.getAllEnrollments();
+    }
 }

@@ -27,9 +27,7 @@ public class EnrollmentService {
     // ⭐ Timetable method
     public List<Map<String,Object>> getStudentCourses(Long studentId){
         List<Object[]> rows = repo.getCoursesByStudent(studentId);
-
         List<Map<String,Object>> result = new ArrayList<>();
-
         for(Object[] r : rows){
             Map<String,Object> m = new HashMap<>();
             m.put("id", r[0]);
@@ -40,23 +38,34 @@ public class EnrollmentService {
             m.put("faculty", r[5]);
             result.add(m);
         }
-
         return result;
     }
 
-    // ⭐ NEW: Faculty vs student analytics
+    // ⭐ Faculty vs student analytics
     public List<Map<String,Object>> getFacultyStudentCounts(){
         List<Object[]> rows = repo.getFacultyStudentCounts();
-
         List<Map<String,Object>> result = new ArrayList<>();
-
         for(Object[] r : rows){
             Map<String,Object> m = new HashMap<>();
             m.put("faculty", r[0]);
             m.put("students", r[1]);
             result.add(m);
         }
+        return result;
+    }
 
+    // ⭐ Admin enrollments view
+    public List<Map<String,Object>> getAllEnrollments(){
+        List<Object[]> rows = repo.getAllEnrollmentDetails();
+        List<Map<String,Object>> result = new ArrayList<>();
+        for(Object[] r : rows){
+            Map<String,Object> m = new HashMap<>();
+            m.put("id", r[0]);
+            m.put("studentName", r[1]);
+            m.put("courseName", r[2]);
+            m.put("facultyName", r[3]);
+            result.add(m);
+        }
         return result;
     }
 }

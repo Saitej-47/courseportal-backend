@@ -20,9 +20,10 @@ public class ScheduleController {
         return service.add(s);
     }
 
+    // ✅ GET by studentId — frontend calls /schedule/{studentId}
     @GetMapping("/{studentId}")
-    public List<Schedule> get(@PathVariable Long studentId){
-        return service.get(studentId);
+    public List<Schedule> getByStudent(@PathVariable Long studentId){
+        return service.getByStudent(studentId);
     }
 
     @DeleteMapping("/{id}")

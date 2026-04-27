@@ -18,13 +18,13 @@ public class StudentService {
     @Autowired
     private CourseRepository courseRepository;
 
-    // ⭐ GET STUDENT BY ID (🔥 ADD THIS)
+    // ✅ GET STUDENT BY ID
     public Student getStudentById(Long studentId){
         return studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
     }
 
-    // ⭐ ENROLL COURSE (no duplicates)
+    // ✅ ENROLL COURSE (no duplicates)
     public Student enrollCourse(Long studentId, Long courseId){
 
         Student student = studentRepository.findById(studentId)
@@ -35,7 +35,7 @@ public class StudentService {
 
         List<Course> courses = student.getCourses();
 
-        // ⭐ prevent duplicate registration
+        // prevent duplicate registration
         boolean alreadyEnrolled = courses.stream()
                 .anyMatch(c -> c.getId().equals(courseId));
 
@@ -48,11 +48,24 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    // ⭐ GET REGISTERED COURSES
+    // ✅ GET REGISTERED COURSES
     public List<Course> getStudentCourses(Long studentId){
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
         return student.getCourses();
+    }
+
+    // 🔥 NEW METHODS FOR ADMIN PANEL
+
+    // ✅ GET ALL STUDENTS
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
+
+    // ✅ DELETE STUDENT
+    public void deleteStudent(Long id) {
+        studentRepository.deleteById(id);
     }
 }

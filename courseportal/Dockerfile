@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17-jdk AS build
 WORKDIR /app
-COPY courseportal/ .
+COPY . .
 RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:17-jre

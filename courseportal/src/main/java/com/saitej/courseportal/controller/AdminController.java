@@ -11,7 +11,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"https://courseportal-frontend.vercel.app", "http://localhost:3000"})
+
 public class AdminController {
 
     @Autowired private StudentRepository studentRepository;

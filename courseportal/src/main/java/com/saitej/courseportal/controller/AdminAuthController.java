@@ -7,7 +7,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"https://courseportal-frontend.vercel.app", "http://localhost:3000"})
 public class AdminAuthController {
 
     private static final String ADMIN_EMAIL = "admin@gmail.com";

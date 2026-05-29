@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = {"https://courseportal-frontend.vercel.app", "http://localhost:3000"})
 @RequestMapping("/schedule")
 public class ScheduleController {
 
